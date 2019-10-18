@@ -179,3 +179,18 @@ a.article:hover {
         display: none;
     }
 }
+
+#sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: green;
+}
+
+#createProjectBtn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    float: right;
+}
+
