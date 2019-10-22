@@ -15,6 +15,11 @@ public class ProjectService {
         return projectRepository.findByName(name);
     }
 
+    public Project getProjectById(String id) {
+        return projectRepository.findProjectById(id);
+    }
+
+
     public void createProject(Project project) {
         projectRepository.insert(project);
     }

@@ -28,10 +28,10 @@ public class ProjectManagerApplicationTests {
 	@Test
 	public void tester() {
 
-		projectService.createProject("TEST PROJECT");
-		List<Project> projectList = projectRepository.findAll();
+		String id = "5dad1b653c7c4a15e6e03261";
+		Project project = projectService.getProjectByName("egg project");
 
-		System.out.println(projectList.size());
+		System.out.println("PROJECT IS " + project.getName());
 	}
 
 }

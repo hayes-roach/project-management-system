@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/core.css}">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <script src="https://kit.fontawesome.com/797e60a2e0.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div style="overflow: auto; height: 100%">
+            <div class="sidebar-header">
+                <h3>Projects</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <th:block th:each="proj: ${projects}">
+                    <li th:if="${proj.id} == ${project.id}" class="active">
+                        <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
+                    </li>
+                    <li th:if="${proj.id} != ${project.id}">
+                        <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+
+
+        <div id="sidebar-footer">
+            <a>
+                <i id="createProjectBtn" class="fas fa-plus-circle fa-lg" data-toggle="modal" data-target="#exampleModalCenter"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <h1 th:text="${project.name}" style="margin-bottom: 15px;"></h1>
+        <ul class="nav nav-pills" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#project-requirements" role="tab" aria-controls="profile" aria-selected="false">Project Requirements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#project-monitoring" role="tab" aria-controls="contact" aria-selected="false">Project Monitoring & Tracking</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
+
+                <h2>Description</h2>
+                <p>Example description for project name: <span th:text="${project.name}"></span> with id: <span th:text="${project.id}"></span></p>
+
+                <div class="line"></div>
+
+                <h3>Team Members</h3>
+                <ul>
+                    <li>Hayes Roach <span class="badge badge-success">Project Manager</span></li>
+                    <li>Liya Piskun <span class="badge badge-success">Software Engineer</span></li>
+                    <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
+                    <li>Tanner Roach <span class="badge badge-success">Database Designer</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/create-project-modal :: create-project-modal">...</div>
+
+</div>
+
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- jQuery Custom Scroller CDN
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>-->
+
+
+</body>
+
+</html>

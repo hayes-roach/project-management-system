@@ -73,7 +73,7 @@ a:focus {
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    padding: 0 0 20px 0;
     border-bottom: 1px solid #47748b;
 }
 
@@ -86,6 +86,8 @@ a:focus {
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    color: white;
+    text-decoration: none;
 }
 
 #sidebar ul li a:hover {
@@ -146,7 +148,7 @@ a.article:hover {
 
 #content {
     width: calc(100% - 250px);
-    padding: 40px;
+    padding: 20px 40px 40px 40px;
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
@@ -184,7 +186,7 @@ a.article:hover {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: green;
+    background-color: #53619a;
 }
 
 #createProjectBtn {
@@ -192,5 +194,18 @@ a.article:hover {
     padding-bottom: 10px;
     padding-right: 10px;
     float: right;
+    cursor: pointer;
 }
 
+
+.tab-content {
+    margin-top: 15px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #6c7ecc !important;
+}
+
+.nav-link {
+    color: #6c7ecc;
+}

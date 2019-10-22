@@ -37,13 +37,21 @@ public class DashboardController {
 
         projectService.createProject(name);
 
-        return "redirect:/dashboard";
+        return "redirect:/";
+    }
 
+    @GetMapping("/view-project")
+    public String viewProject(Model model, @RequestParam String id) {
 
+        List<Project> projects = projectRepository.findAll();
 
+        model.addAttribute("projects", projects);
 
+        Project project = projectService.getProjectById(id);
 
+        model.addAttribute("project", project);
 
+        return "view-license";
     }
 
 
