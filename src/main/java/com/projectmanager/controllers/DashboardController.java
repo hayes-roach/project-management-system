@@ -50,6 +50,7 @@ public class DashboardController {
 
         Project project = projectService.getProjectById(id);
 
+
         model.addAttribute("project", project);
 
         return "view-license";
