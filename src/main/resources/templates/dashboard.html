@@ -25,12 +25,15 @@
         <nav id="sidebar">
             <div style="overflow: auto; height: 100%">
                 <div class="sidebar-header">
-                    <h3>Projects</h3>
+                    <h3 style="margin-bottom: 0">Project List</h3>
                 </div>
 
                 <ul class="list-unstyled components">
-                    <li th:each="project: ${projects}">
+                    <li th:if="${projects} != null" th:each="project: ${projects}">
                         <a th:href="'/view-project?id=' + ${project.id}" th:text="${project.name}">Test</a>
+                    </li>
+                    <li th:if="${projects} == null" style="text-align: center">
+                        <a>--- No Projects Found ---</a>
                     </li>
                 </ul>
             </div>

@@ -70,11 +70,11 @@ a:focus {
 #sidebar .sidebar-header {
     padding: 20px;
     background: #6d7fcc;
+    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul.components {
     padding: 0 0 20px 0;
-    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
@@ -208,4 +208,18 @@ a.article:hover {
 
 .nav-link {
     color: #6c7ecc;
+}
+
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px 0 0 3px;
+}
+
+.btn-labeled {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>Project Management System</title>
 
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/core.css}">
@@ -25,7 +25,7 @@
     <nav id="sidebar">
         <div style="overflow: auto; height: 100%">
             <div class="sidebar-header">
-                <h3>Projects</h3>
+                <h3 style="margin-bottom: 0">Project List</h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -35,6 +35,9 @@
                     </li>
                     <li th:if="${proj.id} != ${project.id}">
                         <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
+                    </li>
+                    <li th:if="${projects} == null" style="text-align: center">
+                        <a>--- No Projects Found ---</a>
                     </li>
                 </th:block>
             </ul>
@@ -50,7 +53,17 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <h1 th:text="${project.name}" style="margin-bottom: 15px;"></h1>
+        <div class="row">
+            <div class="col-md-12">
+                <h1 th:text="${project.name}" style="margin-bottom: 15px; float: left;"></h1>
+                <form style="float: right;" th:action="@{/delete-project}" th:object="${project}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    <button type="submit" class="btn btn-labeled btn-danger">
+                        <span class="btn-label"><i class="fa fa-trash"></i></span>Delete Project
+                    </button>
+                </form>
+            </div>
+        </div>
         <ul class="nav nav-pills" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
@@ -65,7 +78,15 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
 
-                <h2>Description</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 style="float: left;">Description</h2>
+                        <a style="float: right;">
+                            <i id="editDescriptionBtn" class="fas fa-edit fa-lg"></i>
+                        </a>
+                    </div>
+
+                </div>
                 <p>Example description for project name: <span th:text="${project.name}"></span> with id: <span th:text="${project.id}"></span></p>
 
                 <div class="line"></div>
@@ -77,6 +98,10 @@
                     <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
                     <li>Tanner Roach <span class="badge badge-success">Database Designer</span></li>
                 </ul>
+
+                <div class="line"></div>
+
+                <h3>Project Risks</h3>
             </div>
         </div>
     </div>
