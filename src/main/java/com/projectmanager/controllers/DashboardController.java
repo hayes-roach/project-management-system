@@ -6,11 +6,9 @@ import com.projectmanager.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -62,6 +60,21 @@ public class DashboardController {
         String id = project.getId();
 
         projectService.deleteProject(id);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/update-description")
+    public String updateProjectDescription(HttpServletRequest request) {
+
+        String id = request.getParameter("projectId");
+        String description = request.getParameter("description");
+
+        Project project = projectService.getProjectById(id);
+        project.setDescription(description);
+
+        projectRepository.save(project);
+
 
         return "redirect:/";
     }

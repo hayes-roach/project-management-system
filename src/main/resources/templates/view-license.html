@@ -78,16 +78,17 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 style="float: left;">Description</h2>
-                        <a style="float: right;">
-                            <i id="editDescriptionBtn" class="fas fa-edit fa-lg"></i>
-                        </a>
+                <div class="container-fluid" id="descriptionDiv" style="padding: 0;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="float: left;">Description</h3>
+                            <button class="invisible-button editSaveDescription" id="editDescriptionBtn"><span class="fas fa-edit fa-lg"></span></button>
+                        </div>
                     </div>
-
+                    <p id="description" style="margin-bottom: 0" th:text="${project.description}"></p>
+                    <button class="btn btn-success editSaveDescription" id="saveDescription" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                 </div>
-                <p>Example description for project name: <span th:text="${project.name}"></span> with id: <span th:text="${project.id}"></span></p>
+
 
                 <div class="line"></div>
 
@@ -106,12 +107,15 @@
         </div>
     </div>
 
+    <p style="display: none" id="projectId" th:text="${project.id}"></p>
+
     <div th:replace="fragments/create-project-modal :: create-project-modal">...</div>
 
 </div>
 
-<!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<!-- jQuery CDN - minified version (with AJAX) -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -119,6 +123,44 @@
 <!-- jQuery Custom Scroller CDN
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>-->
 
+<script>
+    $(function () {
+        $('#editDescriptionBtn').click(function(){
+            $('#editDescriptionBtn').hide();
+            $('#description').each(function(){
+                var content = $(this).html();
+                $(this).html('<textarea>' + content + '</textarea>');
+            });
+
+            $('#saveDescription').show();
+        });
+
+        var content;
+
+        $('#saveDescription').click(function(){
+            $('#saveDescription').hide();
+            $('textarea').each(function(){
+                content = $(this).val();//.replace(/\n/g,"<br>");
+                $(this).html(content);
+                $(this).contents().unwrap();
+            });
+
+            $('#editDescriptionBtn').show();
+
+            $.ajax({
+                type: "GET",
+                url: "/update-description",
+                data: {
+                    description: content,
+                    projectId: $('#projectId').text()
+                 },
+                success: function (result) {
+                    console.log("Description update: SUCCESS")
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 

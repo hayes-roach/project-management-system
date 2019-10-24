@@ -223,3 +223,34 @@ a.article:hover {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+
+#save {
+    display: none;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    margin: 0;
+    padding: 2px;
+}
+
+.invisible-button {
+    outline: none;
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+    margin: 6px 0 0 0;
+}
+
+.editSaveDescription {
+    display: none;
+}
+
+#descriptionDiv:hover .editSaveDescription {
+    display: block;
+}
+
+
+
