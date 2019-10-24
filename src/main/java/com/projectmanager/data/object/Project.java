@@ -11,11 +11,14 @@ public class Project {
 
     public String description;
 
+    public String manager;
+
     public Project() {}
 
-    public Project(String name, String description) {
+    public Project(String name, String description, String manager) {
         this.name = name;
         this.description = description;
+        this.manager = manager;
     }
 
     public String getId() {
@@ -40,6 +43,14 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 
 }

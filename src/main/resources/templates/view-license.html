@@ -92,13 +92,38 @@
 
                 <div class="line"></div>
 
-                <h3>Team Members</h3>
-                <ul>
-                    <li>Hayes Roach <span class="badge badge-success">Project Manager</span></li>
-                    <li>Liya Piskun <span class="badge badge-success">Software Engineer</span></li>
-                    <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
-                    <li>Tanner Roach <span class="badge badge-success">Database Designer</span></li>
-                </ul>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 style="float: left;">Project Manager</h3>
+                                    <button class="invisible-button editSavePM" id="editPMBtn"><span class="fas fa-edit fa-lg"></span></button>
+                                </div>
+                            </div>
+                            <p id="projectManager" style="margin-bottom: 0" th:text="${project.manager}"></p>
+                            <button class="btn btn-success editSavePM" id="savePMBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
+                        </div>
+
+                        <div class="col-md-3" id="teamMembersDiv" style="padding: 0; margin-bottom: 15px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 style="float: left;">Team Members</h3>
+                                    <button class="invisible-button editSavePM" id="editTeamMembersBtn"><span class="fas fa-edit fa-lg"></span></button>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Hayes Roach <span class="badge badge-success">Project Manager</span></li>
+                                <li>Liya Piskun <span class="badge badge-success">Software Engineer</span></li>
+                                <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
+                                <li>Tanner Roach <span class="badge badge-success">Database Designer</span></li>
+                            </ul>
+                            <button class="btn btn-success editSavePM" id="saveTeamMembersBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+
 
                 <div class="line"></div>
 
@@ -125,10 +150,12 @@
 
 <script>
     $(function () {
+
+        // DESCRIPTION EDIT & SAVE
         $('#editDescriptionBtn').click(function(){
             $('#editDescriptionBtn').hide();
             $('#description').each(function(){
-                var content = $(this).html();
+                var content = $(this).text();
                 $(this).html('<textarea>' + content + '</textarea>');
             });
 
@@ -140,9 +167,12 @@
         $('#saveDescription').click(function(){
             $('#saveDescription').hide();
             $('textarea').each(function(){
-                content = $(this).val();//.replace(/\n/g,"<br>");
+                content = $(this).val();
                 $(this).html(content);
                 $(this).contents().unwrap();
+                if(!$(this).val()) {
+                    $(this).hide();
+                }
             });
 
             $('#editDescriptionBtn').show();
@@ -156,6 +186,47 @@
                  },
                 success: function (result) {
                     console.log("Description update: SUCCESS")
+                }
+            });
+        });
+
+        // ********************************************
+
+        // PROJECT MANAGER EDIT & SAVE
+        $('#editPMBtn').click(function(){
+            $('#editPMBtn').hide();
+            $('#projectManager').each(function(){
+                var content = $(this).text();
+                $(this).html('<textarea id="pmTextArea">' + content + '</textarea>');
+            });
+
+            $('#savePMBtn').show();
+        });
+
+        var pmContent;
+
+        $('#savePMBtn').click(function(){
+            $('#savePMBtn').hide();
+            $('#pmTextArea').each(function(){
+                pmContent = $(this).val();
+                $(this).html(pmContent);
+                $(this).contents().unwrap();
+                if(!$(this).val()) {
+                    $(this).hide();
+                }
+            });
+
+            $('#editPMBtn').show();
+
+            $.ajax({
+                type: "GET",
+                url: "/update-project-manager",
+                data: {
+                    projectmanager: pmContent,
+                    projectId: $('#projectId').text()
+                },
+                success: function (result) {
+                    console.log("PM update: SUCCESS")
                 }
             });
         });

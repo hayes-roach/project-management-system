@@ -20,14 +20,15 @@ public class ProjectService {
     }
 
 
-    public void createProject(Project project) {
+    public Project createProject(Project project) {
         projectRepository.insert(project);
+        return project;
     }
 
-    public void createProject(String name) {
-        Project project = new Project();
-        project.setName(name);
+    public Project createProject(String name, String description, String manager) {
+        Project project = new Project(name, description, manager);
         projectRepository.insert(project);
+        return project;
     }
 
     public void deleteProject(String id) {

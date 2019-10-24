@@ -32,11 +32,19 @@ public class DashboardController {
     }
 
     @PostMapping("/create-project")
-    public String createProject(@RequestParam String name) {
+    public String createProject(HttpServletRequest request) {
 
-        projectService.createProject(name);
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String manager = request.getParameter("manager");
 
-        return "redirect:/";
+
+
+        Project project = projectService.createProject(name, description, manager);
+
+        String id = project.getId();
+
+        return "redirect:/view-project?id=" + id;
     }
 
     @GetMapping("/view-project")
@@ -78,6 +86,23 @@ public class DashboardController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/update-project-manager")
+    public String updateProjectManager(HttpServletRequest request) {
+
+        String id = request.getParameter("projectId");
+        String manager = request.getParameter("projectmanager");
+
+        Project project = projectService.getProjectById(id);
+        project.setManager(manager);
+
+        projectRepository.save(project);
+
+
+        return "redirect:/";
+    }
+
+
 
 
 }
