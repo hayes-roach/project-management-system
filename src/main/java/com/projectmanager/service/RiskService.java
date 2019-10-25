@@ -20,9 +20,12 @@ public class RiskService {
     public void createRisk(String description, String status, String projectId) {
 
         Risk risk = new Risk(description, status, projectId);
-
         riskRepository.save(risk);
 
+    }
+
+    public void deleteRisk(String id) {
+        riskRepository.deleteById(id);
     }
 
 }

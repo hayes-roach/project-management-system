@@ -127,6 +127,17 @@ public class DashboardController {
         return "redirect:/view-project?id=" + projectId;
     }
 
+    @PostMapping("/delete-risk")
+    public String deleteRisk(HttpServletRequest request) {
+
+        String id = request.getParameter("risk");
+        String projectId = request.getParameter("projectId");
+
+        riskService.deleteRisk(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
 
 
 

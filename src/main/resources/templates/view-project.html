@@ -62,9 +62,9 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 th:text="${project.name}" style="margin-bottom: 15px; float: left;"></h1>
-                <form style="float: right;" th:action="@{/delete-project}" th:object="${project}" method="post">
+                <form id="deleteProjectForm" style="float: right;" th:action="@{/delete-project}" th:object="${project}" method="post">
                     <input type="hidden" th:field="*{id}" />
-                    <button type="submit" class="btn btn-labeled btn-danger">
+                    <button type="submit" id="deleteProjectBtn" class="btn btn-labeled btn-danger">
                         <span class="btn-label"><i class="fa fa-trash"></i></span>Delete Project
                     </button>
                 </form>
@@ -152,14 +152,27 @@
                                     <tr th:each="risk : ${risks}">
                                         <td th:text="${risk.description}">TEST</td>
                                         <td th:text="${risk.status}">TEST</td>
-                                        <td>Action</td>
+                                        <td>
+                                            <div class="row" style="margin-left: 5px;">
+                                                <form id="deleteRiskForm" style="display:inline;" th:action="@{/delete-risk}" method="post">
+                                                    <input type="hidden" name="risk" th:value="${risk.id}"/>
+                                                    <button id="deleteRiskBtn" title="Delete Risk" type="submit" class="invisible-button">
+                                                        <i class="far fa-trash-alt fa-lg trashHover"></i>
+                                                    </button>
+                                                    <input type="hidden" name="projectId" th:value="${project.id}"/>
+                                                </form>
+                                                <button title="Edit Risk" type="button" class="invisible-button">
+                                                    <i class="far fa-edit fa-lg editHover"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Risk Description</th>
-                                        <th>Risk Status</th>
-                                        <th>Action</th>
+                                        <th class="search-filter"></th>
+                                        <th class="search-filter"></th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -190,8 +203,37 @@
 
 <script>
     $(function () {
+
         // Datatable initialization
-        $('#riskDatatable').DataTable();
+
+        $('tfoot th.search-filter').each( function () {
+            $(this).html( '<input type="text" />' );
+        } );
+
+        var table = $('#riskDatatable').DataTable({
+            "language": {
+                "lengthMenu": 'Show <select>'+
+                    '<option value="10">10</option>'+
+                    '<option value="25">25</option>'+
+                    '<option value="50">50</option>'+
+                    '<option value="-1">All</option>'+
+                    '</select> risks'
+            },
+            sDom: 'lrtip',
+            order: []
+        });
+
+        // Search for footer on risk table
+        table.columns().every( function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change clear', function() {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+        });
+
+        // ******************************************
 
 
         // DESCRIPTION EDIT & SAVE
@@ -280,7 +322,27 @@
         var id = $(this).data("id");
         $(".modal-body #projectIdHidden").val(id);
 
-    })
+    });
+
+
+    $(function () {
+       $('#deleteProjectBtn').click(function (event) {
+           if(confirm("Are you sure you want to delete this project?\nOnce it is deleted, it is gone forever.")) {
+               $('#deleteProjectForm').submit();
+           } else {
+               event.preventDefault();
+           }
+       });
+
+        $('#deleteRiskBtn').click(function (event) {
+            if(confirm("Are you sure you want to delete this risk?")) {
+                $('#deleteRiskForm').submit();
+            } else {
+                event.preventDefault();
+            }
+        });
+    });
+
 </script>
 
 </body>
