@@ -3,8 +3,8 @@
 <head>
 </head>
 <body>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" th:fragment="create-project-modal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" th:fragment="create-project-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Create New Project</h5>
@@ -22,6 +22,7 @@
 
                         <label for="project-manager">Project Manager:</label><br>
                         <input type="text" id="project-manager" name="manager" required><br>
+
                         <!--
                         <label for="project-description">Project Description:</label><br>
                         <input type="text" id="project-description" name="project-description" required>-->

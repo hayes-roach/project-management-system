@@ -259,6 +259,16 @@ textarea {
     display: block;
 }
 
+#riskDatatable_filter {
+    display: none;
+}
 
+.trashHover:hover {
+    color: red;
+}
+
+.editHover:hover {
+    color: blue;
+}
 
 

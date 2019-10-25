@@ -1,8 +1,11 @@
 package com.projectmanager.controllers;
 
 import com.projectmanager.data.dao.ProjectRepository;
+import com.projectmanager.data.dao.RiskRepository;
 import com.projectmanager.data.object.Project;
+import com.projectmanager.data.object.Risk;
 import com.projectmanager.service.ProjectService;
+import com.projectmanager.service.RiskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,12 @@ public class DashboardController {
 
     @Autowired
     ProjectRepository projectRepository;
+
+    @Autowired
+    RiskService riskService;
+
+    @Autowired
+    RiskRepository riskRepository;
 
     @GetMapping("/")
     public String dashboard(Model model, HttpSession httpSession) {
@@ -59,7 +68,11 @@ public class DashboardController {
 
         model.addAttribute("project", project);
 
-        return "view-license";
+        List<Risk> risks = riskService.getAllRisksByProjectId(id);
+
+        model.addAttribute("risks", risks);
+
+        return "view-project";
     }
 
     @PostMapping("/delete-project")
@@ -100,6 +113,29 @@ public class DashboardController {
 
 
         return "redirect:/";
+    }
+
+    @PostMapping("/create-risk")
+    public String createRisk(HttpServletRequest request) {
+
+       String description = request.getParameter("description");
+       String status = request.getParameter("status");
+       String projectId = request.getParameter("projectId");
+
+       riskService.createRisk(description, status, projectId);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/delete-risk")
+    public String deleteRisk(HttpServletRequest request) {
+
+        String id = request.getParameter("risk");
+        String projectId = request.getParameter("projectId");
+
+        riskService.deleteRisk(id);
+
+        return "redirect:/view-project?id=" + projectId;
     }
 
 
