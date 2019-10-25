@@ -4,7 +4,7 @@ This project management system keeps track of multiple projects with an easy to 
 
 Each Project has three main sections that contains different functionality.
 
-1. General Project Information
+1. General
     - Project Name
     - High Level Project Description
     - Project Manager Name
