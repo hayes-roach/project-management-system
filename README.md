@@ -18,3 +18,5 @@ Each Project has three main sections that contains different functionality.
 3. Project Monitoring and Tracking
     - Effort Monitoring (in person hours)
     - Effort Tracking (in person hours)
+
+Built using Spring Boot, Thymeleaf, and MongoDB
