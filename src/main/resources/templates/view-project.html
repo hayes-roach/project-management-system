@@ -15,6 +15,12 @@
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
+    <link rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}">
+
+
+
+
+
     <script src="https://kit.fontawesome.com/797e60a2e0.js" crossorigin="anonymous"></script>
 </head>
 
@@ -46,7 +52,7 @@
 
         <div id="sidebar-footer">
             <a>
-                <i id="createProjectBtn" class="fas fa-plus-circle fa-lg" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                <i id="createProjectBtn" class="fas fa-plus-circle fa-lg" data-toggle="modal" data-target="#createProjectModal"></i>
             </a>
         </div>
     </nav>
@@ -105,14 +111,14 @@
                             <button class="btn btn-success editSavePM" id="savePMBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                         </div>
 
-                        <div class="col-md-3" id="teamMembersDiv" style="padding: 0; margin-bottom: 15px;">
+                        <div class="col-md-3" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 15px;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 style="float: left;">Team Members</h3>
                                     <button class="invisible-button editSavePM" id="editTeamMembersBtn"><span class="fas fa-edit fa-lg"></span></button>
                                 </div>
                             </div>
-                            <ul>
+                            <ul style="list-style-type: none; padding: 0">
                                 <li>Hayes Roach <span class="badge badge-success">Project Manager</span></li>
                                 <li>Liya Piskun <span class="badge badge-success">Software Engineer</span></li>
                                 <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
@@ -127,14 +133,47 @@
 
                 <div class="line"></div>
 
-                <h3>Project Risks</h3>
+                <div class="container-fluid" id="risksDiv" style="padding: 0;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="float: left;">Project Risks</h3>
+                            <button style="float: right;" class="btn btn-labeled btn-success open-createRiskModal" data-toggle="modal" data-target="#createRiskModal" th:attr="data-id=${project.id}">
+                                <span class="btn-label"><i class="fa fa-plus"></i></span>Add Risk
+                            </button>
+                            <table id="riskDatatable" class="display dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Risk Description</th>
+                                        <th>Risk Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="risk : ${risks}">
+                                        <td th:text="${risk.description}">TEST</td>
+                                        <td th:text="${risk.status}">TEST</td>
+                                        <td>Action</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Risk Description</th>
+                                        <th>Risk Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <p style="display: none" id="projectId" th:text="${project.id}"></p>
 
-    <div th:replace="fragments/create-project-modal :: create-project-modal">...</div>
+    <div th:replace="fragments/create-project-modal :: create-project-modal"></div>
+    <div th:replace="fragments/create-risk-modal :: create-risk-modal"></div>
 
 </div>
 
@@ -145,11 +184,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<!-- jQuery Custom Scroller CDN
-<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>-->
+
+
+<script th:src="@{/js/datatables.js}"></script>
 
 <script>
     $(function () {
+        // Datatable initialization
+        $('#riskDatatable').DataTable();
+
 
         // DESCRIPTION EDIT & SAVE
         $('#editDescriptionBtn').click(function(){
@@ -231,6 +274,13 @@
             });
         });
     });
+
+    $(document).on("click", ".open-createRiskModal", function () {
+
+        var id = $(this).data("id");
+        $(".modal-body #projectIdHidden").val(id);
+
+    })
 </script>
 
 </body>

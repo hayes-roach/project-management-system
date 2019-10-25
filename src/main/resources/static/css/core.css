@@ -259,6 +259,8 @@ textarea {
     display: block;
 }
 
-
+#riskDatatable_filter {
+    display: none;
+}
 
 
