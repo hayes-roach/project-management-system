@@ -14,18 +14,20 @@
                 </div>
                 <form id="create-project-form" th:action="@{/create-project}" method="post">
                     <div class="modal-body">
-                        <label for="project-name">Project Name:</label><br>
-                        <input type="text" id="project-name" name="name" required><br><br>
 
-                        <label for="project-description">Project Description:</label><br>
-                        <input type="text" id="project-description" name="description" required><br><br>
+                        <div class="form-group">
+                            <label for="project-name">Project Name:</label>
+                            <input class="form-control" type="text" id="project-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-description">Project Description:</label>
+                            <textarea class="form-control" id="project-description" name="description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-manager">Project Manager:</label>
+                            <input class="form-control" type="text" id="project-manager" name="manager" required>
+                        </div>
 
-                        <label for="project-manager">Project Manager:</label><br>
-                        <input type="text" id="project-manager" name="manager" required><br>
-
-                        <!--
-                        <label for="project-description">Project Description:</label><br>
-                        <input type="text" id="project-description" name="project-description" required>-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
 
 
 
@@ -31,7 +33,12 @@
     <nav id="sidebar">
         <div style="overflow: auto; height: 100%">
             <div class="sidebar-header">
-                <h3 style="margin-bottom: 0">Project List</h3>
+                <h3 style="margin-bottom: 0; display: inline">Projects</h3>
+                <a href="/" style="text-decoration: none; float: right;">
+                    <button class="invisible-button" style="margin: 0; color: white;">
+                        <i class="fas fa-home fa-2x"></i>
+                    </button>
+                </a>
             </div>
 
             <ul class="list-unstyled components">
@@ -87,7 +94,7 @@
                 <div class="container-fluid" id="descriptionDiv" style="padding: 0;">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 style="float: left;">Description</h3>
+                            <h3 style="float: left;">Project Description</h3>
                             <button class="invisible-button editSaveDescription" id="editDescriptionBtn"><span class="fas fa-edit fa-lg"></span></button>
                         </div>
                     </div>
@@ -100,7 +107,7 @@
 
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-3" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
+                        <div class="col-md-6" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 style="float: left;">Project Manager</h3>
@@ -111,7 +118,7 @@
                             <button class="btn btn-success editSavePM" id="savePMBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                         </div>
 
-                        <div class="col-md-3" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 15px;">
+                        <div class="col-md-6" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 0;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 style="float: left;">Team Members</h3>
@@ -126,7 +133,7 @@
                             </ul>
                             <button class="btn btn-success editSavePM" id="saveTeamMembersBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                         </div>
-                        <div class="col-md-6"></div>
+
                     </div>
                 </div>
 
@@ -201,6 +208,8 @@
 
 <script th:src="@{/js/datatables.js}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
 <script>
     $(function () {
 
@@ -241,19 +250,19 @@
             $('#editDescriptionBtn').hide();
             $('#description').each(function(){
                 var content = $(this).text();
-                $(this).html('<textarea>' + content + '</textarea>');
+                $(this).html('<textarea id="descriptionTextArea" class="form-control editTextArea">' + content + '</textarea>');
             });
 
             $('#saveDescription').show();
         });
 
-        var content;
+        var descriptionContent;
 
         $('#saveDescription').click(function(){
             $('#saveDescription').hide();
-            $('textarea').each(function(){
-                content = $(this).val();
-                $(this).html(content);
+            $('#descriptionTextArea').each(function(){
+                descriptionContent = $(this).val();
+                $(this).html(descriptionContent);
                 $(this).contents().unwrap();
                 if(!$(this).val()) {
                     $(this).hide();
@@ -266,7 +275,7 @@
                 type: "GET",
                 url: "/update-description",
                 data: {
-                    description: content,
+                    description: descriptionContent,
                     projectId: $('#projectId').text()
                  },
                 success: function (result) {
@@ -282,7 +291,7 @@
             $('#editPMBtn').hide();
             $('#projectManager').each(function(){
                 var content = $(this).text();
-                $(this).html('<textarea id="pmTextArea">' + content + '</textarea>');
+                $(this).html('<textarea id="pmTextArea" class="form-control editTextArea">' + content + '</textarea>');
             });
 
             $('#savePMBtn').show();

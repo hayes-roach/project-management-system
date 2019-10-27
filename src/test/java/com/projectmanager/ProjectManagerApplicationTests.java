@@ -1,8 +1,11 @@
 package com.projectmanager;
 
 import com.projectmanager.data.dao.ProjectRepository;
+import com.projectmanager.data.dao.TeamMemberRepository;
 import com.projectmanager.data.object.Project;
+import com.projectmanager.data.object.TeamMember;
 import com.projectmanager.service.ProjectService;
+import com.projectmanager.service.TeamMemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,12 @@ public class ProjectManagerApplicationTests {
 	@Autowired
 	ProjectRepository projectRepository;
 
+	@Autowired
+	TeamMemberService teamMemberService;
+
+	@Autowired
+	TeamMemberRepository teamMemberRepository;
+
 	@Test
 	public void contextLoads() {
 	}
@@ -28,10 +37,13 @@ public class ProjectManagerApplicationTests {
 	@Test
 	public void tester() {
 
-		String id = "5dad1b653c7c4a15e6e03261";
-		Project project = projectService.getProjectByName("egg project");
+		TeamMember teamMember = new TeamMember();
+		teamMember.setName("Aditya Patel");
+		teamMember.setRole("Software Developer");
+		teamMemberRepository.insert(teamMember);
 
-		System.out.println("PROJECT IS " + project.getName());
 	}
+
+
 
 }

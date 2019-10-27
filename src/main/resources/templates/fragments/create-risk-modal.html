@@ -14,17 +14,22 @@
             </div>
             <form id="create-project-form" th:action="@{/create-risk}" method="post">
                 <div class="modal-body">
-                    <label for="project-name">Risk Description:</label><br>
-                    <textarea type="text" id="project-name" name="description" required></textarea><br><br>
 
-                    <label for="project-description">Risk Status:</label><br>
-                    <select type="text" class="ui dropdown" id="project-description" name="status" required>
-                        <option value="Identified">Identified</option>
-                        <option value="Assessed">Assessed</option>
-                        <option value="Controlled">Controlled</option>
-                        <option value="Triggered">Triggered</option>
-                        <option value="Closed">Closed</option>
-                    </select><br><br>
+                    <div class="form-group">
+                        <label for="project-description">Risk Status:</label><br>
+                        <select type="text" class="selectpicker" id="project-description" name="status" required>
+                            <option value="Identified">Identified</option>
+                            <option value="Assessed">Assessed</option>
+                            <option value="Controlled">Controlled</option>
+                            <option value="Triggered">Triggered</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-name">Risk Description:</label>
+                        <textarea class="form-control" type="text" id="project-name" name="description" required></textarea>
+                    </div>
 
                     <input type="hidden" id="projectIdHidden" name="projectId">
 
