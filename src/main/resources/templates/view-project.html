@@ -19,10 +19,6 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-
-
-
-
     <script src="https://kit.fontawesome.com/797e60a2e0.js" crossorigin="anonymous"></script>
 </head>
 
@@ -68,7 +64,7 @@
     <div id="content">
         <div class="row">
             <div class="col-md-12">
-                <h1 th:text="${project.name}" style="margin-bottom: 15px; float: left;"></h1>
+                <h1 class="colored" th:text="${project.name}" style="margin-bottom: 15px; float: left;"></h1>
                 <form id="deleteProjectForm" style="float: right;" th:action="@{/delete-project}" th:object="${project}" method="post">
                     <input type="hidden" th:field="*{id}" />
                     <button type="submit" id="deleteProjectBtn" class="btn btn-labeled btn-danger">
@@ -91,11 +87,13 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
 
+                <div class="line"></div>
+
                 <div class="container-fluid" id="descriptionDiv" style="padding: 0;">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 style="float: left;">Project Description</h3>
-                            <button class="invisible-button editSaveDescription" id="editDescriptionBtn"><span class="fas fa-edit fa-lg"></span></button>
+                            <h4 style="float: left;"><i class="fas fa-newspaper"></i> Project Description</h4>
+                            <button class="invisible-button editSaveDescription" id="editDescriptionBtn"><span class="fas fa-edit fa-lg colored"></span></button>
                         </div>
                     </div>
                     <p id="description" style="margin-bottom: 0" th:text="${project.description}"></p>
@@ -105,32 +103,64 @@
 
                 <div class="line"></div>
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
+                <div class="container-fluid" style="padding: 0;">
+                    <div>
+                        <div class="col-md-12" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3 style="float: left;">Project Manager</h3>
-                                    <button class="invisible-button editSavePM" id="editPMBtn"><span class="fas fa-edit fa-lg"></span></button>
+                                    <h4 style="float: left;"><i class="fas fa-user"></i> Project Manager</h4>
+                                    <button class="invisible-button editSavePM" id="editPMBtn"><span class="fas fa-edit fa-lg colored"></span></button>
                                 </div>
                             </div>
                             <p id="projectManager" style="margin-bottom: 0" th:text="${project.manager}"></p>
                             <button class="btn btn-success editSavePM" id="savePMBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                         </div>
 
-                        <div class="col-md-6" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 0;">
+                        <div class="line"></div>
+
+                        <div class="col-md-12" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 0;">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3 style="float: left;">Team Members</h3>
-                                    <button class="invisible-button editSavePM" id="editTeamMembersBtn"><span class="fas fa-edit fa-lg"></span></button>
+                                    <h4 style="float: left;"><i class="fas fa-users"></i> Team Members</h4>
+                                    <button style="float: right;" class="btn btn-labeled btn-success open-createTeamMemberModal" data-toggle="modal" data-target="#createTeamMemberModal" th:attr="data-id=${project.id}">
+                                        <span class="btn-label"><i class="fa fa-plus"></i></span>Add Team Member
+                                    </button>
                                 </div>
                             </div>
-                            <ul style="list-style-type: none; padding: 0">
-                                <li>Hayes Roach <span class="badge badge-success">Project Manager</span></li>
-                                <li>Liya Piskun <span class="badge badge-success">Software Engineer</span></li>
-                                <li>Parker Roach <span class="badge badge-success">QA Specialist</span></li>
-                                <li>Tanner Roach <span class="badge badge-success">Database Designer</span></li>
-                            </ul>
+                            <table id="teamTable" class="display">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="member : ${team}">
+                                        <td th:text="${member.name}"></td>
+                                        <td>
+                                            <span class="badge badge-success">
+                                                <span th:text="${member.role}"></span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="row" style="margin-left: 5px;">
+                                                <form id="deleteTeamMemberForm" style="display:inline;" th:action="@{/delete-team-member}" method="post">
+                                                    <input type="hidden" name="member" th:value="${member.id}"/>
+                                                    <button id="deleteTeamMemberBtn" title="Remove Team Member" type="submit" class="invisible-button">
+                                                        <i class="far fa-trash-alt fa-lg trashHover"></i>
+                                                    </button>
+                                                    <input type="hidden" name="projectId" th:value="${project.id}"/>
+                                                </form>
+                                                <button title="Edit Team Member" class="invisible-button open-editTeamMemberModal" data-toggle="modal" data-target="#editTeamMemberModal"
+                                                        th:attr="data-id=${project.id},data-name=${member.name},data-role=${member.role},data-team-member-id=${member.id}">
+                                                    <i class="far fa-edit fa-lg editHover"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <button class="btn btn-success editSavePM" id="saveTeamMembersBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
                         </div>
 
@@ -143,7 +173,7 @@
                 <div class="container-fluid" id="risksDiv" style="padding: 0;">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 style="float: left;">Project Risks</h3>
+                            <h4 style="float: left;"><i class="fas fa-clipboard-list"></i> Project Risks</h4>
                             <button style="float: right;" class="btn btn-labeled btn-success open-createRiskModal" data-toggle="modal" data-target="#createRiskModal" th:attr="data-id=${project.id}">
                                 <span class="btn-label"><i class="fa fa-plus"></i></span>Add Risk
                             </button>
@@ -194,6 +224,8 @@
 
     <div th:replace="fragments/create-project-modal :: create-project-modal"></div>
     <div th:replace="fragments/create-risk-modal :: create-risk-modal"></div>
+    <div th:replace="fragments/create-team-member-modal :: create-team-member-modal"></div>
+    <div th:replace="fragments/edit-team-member-modal :: edit-team-member-modal"></div>
 
 </div>
 
@@ -240,6 +272,22 @@
                     that.search(this.value).draw();
                 }
             });
+        });
+
+        // ******************************************
+
+        var teamTable = $('#teamTable').DataTable({
+            iDisplayLength: 5,
+            "language": {
+                "lengthMenu": 'Show <select>'+
+                    '<option value="5">5</option>'+
+                    '<option value="10">10</option>'+
+                    '<option value="50">50</option>'+
+                    '<option value="-1">All</option>'+
+                    '</select> Team Members'
+            },
+            sDom: 'lrtip',
+            order: []
         });
 
         // ******************************************
@@ -330,6 +378,27 @@
 
         var id = $(this).data("id");
         $(".modal-body #projectIdHidden").val(id);
+
+    });
+
+    $(document).on("click", ".open-createTeamMemberModal", function () {
+
+        var id = $(this).data("id");
+        $(".modal-body #projectIdHidden").val(id);
+
+    });
+
+    $(document).on("click", ".open-editTeamMemberModal", function () {
+
+        var id = $(this).data("id");
+        var name = $(this).data("name");
+        var role = $(this).data("role");
+        var teamMemberId = $(this).data("teamMemberId");
+
+        $(".modal-body #projectIdHidden").val(id);
+        $(".modal-body #edit-team-member-name").val(name);
+        $(".modal-body #edit-team-member-role").val(role);
+        $(".modal-body #teamMemberId").val(teamMemberId);
 
     });
 

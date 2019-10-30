@@ -11,5 +11,7 @@ public interface TeamMemberRepository extends MongoRepository<TeamMember, String
 
     public List<TeamMember> findAllByProjectId(String projectId);
 
+    public TeamMember findTeamMemberById(String teamMemberId);
+
 }
 

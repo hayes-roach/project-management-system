@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeamMemberService {
@@ -26,6 +27,15 @@ public class TeamMemberService {
 
     public void deleteTeamMember(String id) {
         teamMemberRepository.deleteById(id);
+    }
+
+    public void updateTeamMember(String name, String role, String id) {
+
+        TeamMember teamMember = teamMemberRepository.findTeamMemberById(id);
+        teamMember.setName(name);
+        teamMember.setRole(role);
+
+        teamMemberRepository.save(teamMember);
     }
 
 }

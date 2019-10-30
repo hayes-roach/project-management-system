@@ -2,10 +2,13 @@ package com.projectmanager.controllers;
 
 import com.projectmanager.data.dao.ProjectRepository;
 import com.projectmanager.data.dao.RiskRepository;
+import com.projectmanager.data.dao.TeamMemberRepository;
 import com.projectmanager.data.object.Project;
 import com.projectmanager.data.object.Risk;
+import com.projectmanager.data.object.TeamMember;
 import com.projectmanager.service.ProjectService;
 import com.projectmanager.service.RiskService;
+import com.projectmanager.service.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,12 @@ public class DashboardController {
 
     @Autowired
     RiskRepository riskRepository;
+
+    @Autowired
+    TeamMemberService teamMemberService;
+
+    @Autowired
+    TeamMemberRepository teamMemberRepository;
 
     @GetMapping("/")
     public String dashboard(Model model, HttpSession httpSession) {
@@ -65,12 +74,15 @@ public class DashboardController {
 
         Project project = projectService.getProjectById(id);
 
-
         model.addAttribute("project", project);
 
         List<Risk> risks = riskService.getAllRisksByProjectId(id);
 
         model.addAttribute("risks", risks);
+
+        List<TeamMember> teamMembers =  teamMemberService.getAllTeamMembersByProjectId(id);
+
+        model.addAttribute("team", teamMembers);
 
         return "view-project";
     }
@@ -134,6 +146,42 @@ public class DashboardController {
         String projectId = request.getParameter("projectId");
 
         riskService.deleteRisk(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/create-team-member")
+    public String createTeamMember(HttpServletRequest request) {
+
+        String name = request.getParameter("name");
+        String role = request.getParameter("role");
+        String projectId = request.getParameter("projectId");
+
+        teamMemberService.createTeamMember(name, role, projectId);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/delete-team-member")
+    public String deleteTeamMember(HttpServletRequest request) {
+
+        String id = request.getParameter("member");
+        String projectId = request.getParameter("projectId");
+
+        teamMemberService.deleteTeamMember(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/edit-team-member")
+    public String editTeamMember(HttpServletRequest request) {
+
+        String id = request.getParameter("teamMemberId");
+        String projectId = request.getParameter("projectId");
+        String name = request.getParameter("name");
+        String role = request.getParameter("role");
+
+        teamMemberService.updateTeamMember(name, role, id);
 
         return "redirect:/view-project?id=" + projectId;
     }

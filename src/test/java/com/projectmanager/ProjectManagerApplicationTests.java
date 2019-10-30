@@ -38,8 +38,9 @@ public class ProjectManagerApplicationTests {
 	public void tester() {
 
 		TeamMember teamMember = new TeamMember();
-		teamMember.setName("Aditya Patel");
-		teamMember.setRole("Software Developer");
+		teamMember.setProjectId("5db0ab2116ec1a23b85393b0");
+		teamMember.setName("Tanner Poole");
+		teamMember.setRole("Support Technician");
 		teamMemberRepository.insert(teamMember);
 
 	}
