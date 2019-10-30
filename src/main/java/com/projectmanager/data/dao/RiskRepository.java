@@ -11,4 +11,6 @@ public interface RiskRepository extends MongoRepository<Risk, String> {
 
     public List<Risk> findAllByProjectId(String projectId);
 
+    public Risk findRiskById(String id);
+
 }

@@ -28,4 +28,12 @@ public class RiskService {
         riskRepository.deleteById(id);
     }
 
+    public void updateRisk(String status, String description, String id) {
+
+        Risk risk = riskRepository.findRiskById(id);
+        risk.setStatus(status);
+        risk.setDescription(description);
+
+        riskRepository.save(risk);
+    }
 }

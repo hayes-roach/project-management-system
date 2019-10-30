@@ -138,10 +138,7 @@
                                 <tbody>
                                     <tr th:each="member : ${team}">
                                         <td th:text="${member.name}"></td>
-                                        <td>
-                                            <span class="badge badge-success">
-                                                <span th:text="${member.role}"></span>
-                                            </span>
+                                        <td th:text="${member.role}">
                                         </td>
                                         <td>
                                             <div class="row" style="margin-left: 5px;">
@@ -198,7 +195,8 @@
                                                     </button>
                                                     <input type="hidden" name="projectId" th:value="${project.id}"/>
                                                 </form>
-                                                <button title="Edit Risk" type="button" class="invisible-button">
+                                                <button title="Edit Risk" type="button" class="invisible-button open-editRiskModal" data-toggle="modal" data-target="#editRiskModal"
+                                                        th:attr="data-id=${project.id},data-description=${risk.description},data-status=${risk.status},data-risk-id=${risk.id}">
                                                     <i class="far fa-edit fa-lg editHover"></i>
                                                 </button>
                                             </div>
@@ -226,6 +224,7 @@
     <div th:replace="fragments/create-risk-modal :: create-risk-modal"></div>
     <div th:replace="fragments/create-team-member-modal :: create-team-member-modal"></div>
     <div th:replace="fragments/edit-team-member-modal :: edit-team-member-modal"></div>
+    <div th:replace="fragments/edit-risk-modal :: edit-risk-modal"></div>
 
 </div>
 
@@ -399,6 +398,20 @@
         $(".modal-body #edit-team-member-name").val(name);
         $(".modal-body #edit-team-member-role").val(role);
         $(".modal-body #teamMemberId").val(teamMemberId);
+
+    });
+
+    $(document).on("click", ".open-editRiskModal", function () {
+
+        var projectId = $(this).data("id");
+        var status = $(this).data("status");
+        var description = $(this).data("description");
+        var riskId = $(this).data("riskId");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+        $(".modal-body #edit-status").val(status).change();
+        $(".modal-body #edit-description").val(description);
+        $(".modal-body #riskId").val(riskId);
 
     });
 

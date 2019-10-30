@@ -149,6 +149,19 @@ public class DashboardController {
 
         return "redirect:/view-project?id=" + projectId;
     }
+    @PostMapping("/edit-risk")
+    public String editRisk(HttpServletRequest request) {
+
+        String id = request.getParameter("riskId");
+        String projectId = request.getParameter("projectId");
+        String description = request.getParameter("description");
+        String status = request.getParameter("status");
+
+        riskService.updateRisk(status, description, id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
 
     @PostMapping("/create-team-member")
     public String createTeamMember(HttpServletRequest request) {
