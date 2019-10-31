@@ -10,8 +10,7 @@
 
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/core.css}">
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -22,71 +21,54 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div style="overflow: auto; height: 100%">
-
-
-                <div class="sidebar-header">
-                    <h3 style="margin-bottom: 0">Project List</h3>
-                </div>
-
-                <ul class="list-unstyled components">
-                    <li th:if="${projects} != null" th:each="project: ${projects}">
-                        <a th:href="'/view-project?id=' + ${project.id}" th:text="${project.name}">Test</a>
-                    </li>
-                    <li th:if="${projects} == null" style="text-align: center">
-                        <a>--- No Projects Found ---</a>
-                    </li>
-                </ul>
-            </div>
-
-
-            <div id="sidebar-footer">
-                <a>
-                    <i id="createProjectBtn" class="fas fa-plus-circle fa-lg" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                </a>
-            </div>
-        </nav>
+        <div th:replace="fragments/sidebar-dashboard :: sidebar-dashboard"></div>
 
         <!-- Page Content  -->
         <div id="content">
 
-            <ul class="nav nav-pills" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Project Requirements</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false">Project Monitoring and Tracking</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab">
-                    <h2>Description</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                    <div class="line"></div>
-
-                    <h2>Lorem Ipsum Dolor</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                    <div class="line"></div>
-
-                    <h2>Lorem Ipsum Dolor</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                    <div class="line"></div>
-
-                    <h3>Lorem Ipsum Dolor</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="container-fluid" style="padding: 0;">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center; margin-bottom: 25px">
+                        <h1 class="dashboardBtn">Project Management System</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin: 0 auto; text-align: center">
+                        <button class="bigbox" data-toggle="modal" data-target="#createProjectModal">
+                            <div>
+                                <i class="fas fa-plus fa-5x dashboardBtn"></i>
+                                <p class="dashboardBtn">Create Project</p>
+                            </div>
+                        </button>
+                        <button class="bigbox" style="margin-left: 25px;">
+                            <div>
+                                <i class="fas fa-search fa-5x dashboardBtn"></i>
+                                <p class="dashboardBtn">Search Projects</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-md-12" style="margin: 0 auto; text-align: center">
+                        <button class="bigbox">
+                            <div>
+                                <i class="fas fa-user fa-5x dashboardBtn"></i>
+                                <p class="dashboardBtn">Edit User</p>
+                            </div>
+                        </button>
+                        <button class="bigbox" style="margin-left: 25px;">
+                            <div>
+                                <i class="fas fa-sign-out-alt fa-5x dashboardBtn"></i>
+                                <p class="dashboardBtn">Logout</p>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <div th:replace="fragments/create-project-modal :: create-project-modal">...</div>
+        <div th:replace="fragments/create-project-modal :: create-project-modal"></div>
 
     </div>
 

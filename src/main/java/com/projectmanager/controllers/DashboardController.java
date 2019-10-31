@@ -46,6 +46,7 @@ public class DashboardController {
 
         model.addAttribute("projects", projects);
 
+
         return "dashboard";
     }
 

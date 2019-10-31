@@ -26,39 +26,7 @@
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div style="overflow: auto; height: 100%">
-            <div class="sidebar-header">
-                <h3 style="margin-bottom: 0; display: inline">Projects</h3>
-                <a href="/" style="text-decoration: none; float: right;">
-                    <button class="invisible-button" style="margin: 0; color: white;">
-                        <i class="fas fa-home fa-2x"></i>
-                    </button>
-                </a>
-            </div>
-
-            <ul class="list-unstyled components">
-                <th:block th:each="proj: ${projects}">
-                    <li th:if="${proj.id} == ${project.id}" class="active">
-                        <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
-                    </li>
-                    <li th:if="${proj.id} != ${project.id}">
-                        <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
-                    </li>
-                    <li th:if="${projects} == null" style="text-align: center">
-                        <a>--- No Projects Found ---</a>
-                    </li>
-                </th:block>
-            </ul>
-        </div>
-
-
-        <div id="sidebar-footer">
-            <a>
-                <i id="createProjectBtn" class="fas fa-plus-circle fa-lg" data-toggle="modal" data-target="#createProjectModal"></i>
-            </a>
-        </div>
-    </nav>
+    <div th:replace="fragments/sidebar-project :: sidebar-project"></div>
 
     <!-- Page Content  -->
     <div id="content">
