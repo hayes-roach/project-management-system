@@ -16,13 +16,13 @@
 
         <ul class="list-unstyled components">
             <th:block th:each="proj: ${projects}">
-                <li th:if="${projects} != null">
+                <li th:if="${hasNoProjects} == false">
                     <a th:href="'/view-project?id=' + ${proj.id}" th:text="${proj.name}">Test</a>
                 </li>
-                <li th:if="${projects} == null" style="text-align: center">
-                    <a>--- No Projects Found ---</a>
-                </li>
             </th:block>
+            <li th:if="${hasNoProjects} == true" style="text-align: center">
+                <a>--- No Projects Found ---</a>
+            </li>
         </ul>
     </div>
 

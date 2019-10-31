@@ -44,7 +44,13 @@ public class DashboardController {
 
         List<Project> projects = projectRepository.findAll();
 
+        System.out.println(projects.size());
         model.addAttribute("projects", projects);
+
+        if(projects.size() == 0)
+            model.addAttribute("hasNoProjects", true);
+        else
+            model.addAttribute("hasNoProjects", false);
 
 
         return "dashboard";
