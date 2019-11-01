@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab" th:fragment="view-general">
+
+    <div class="line"></div>
+
+    <div class="container-fluid" id="descriptionDiv" style="padding: 0;">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="float: left;">Project Description</h4>
+                <button class="invisible-button editSaveDescription" id="editDescriptionBtn"><span class="fas fa-edit fa-lg colored"></span></button>
+            </div>
+        </div>
+        <p id="description" style="margin-bottom: 0" th:text="${project.description}"></p>
+        <button class="btn btn-success editSaveDescription" id="saveDescription" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
+    </div>
+
+
+    <div class="line"></div>
+
+    <div class="container-fluid" style="padding: 0;">
+        <div>
+            <div class="col-md-12" id="projectManagerDiv" style="padding: 0; margin-bottom: 15px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 style="float: left;">Project Manager</h4>
+                        <button class="invisible-button editSavePM" id="editPMBtn"><span class="fas fa-edit fa-lg colored"></span></button>
+                    </div>
+                </div>
+                <p id="projectManager" style="margin-bottom: 0" th:text="${project.manager}"></p>
+                <button class="btn btn-success editSavePM" id="savePMBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="col-md-12" id="teamMembersDiv" style="padding: 0; margin: 0 0 15px 0;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 style="float: left;">Team Members</h4>
+                        <button style="float: right;" class="btn btn-labeled btn-success open-createTeamMemberModal" data-toggle="modal" data-target="#createTeamMemberModal" th:attr="data-id=${project.id}">
+                            <span class="btn-label"><i class="fa fa-plus"></i></span>Add Team Member
+                        </button>
+                    </div>
+                </div>
+                <table id="teamTable" class="display">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member : ${team}">
+                        <td th:text="${member.name}"></td>
+                        <td th:text="${member.role}">
+                        </td>
+                        <td>
+                            <div class="row" style="margin-left: 5px;">
+                                <form id="deleteTeamMemberForm" style="display:inline;" th:action="@{/delete-team-member}" method="post">
+                                    <input type="hidden" name="member" th:value="${member.id}"/>
+                                    <button id="deleteTeamMemberBtn" title="Remove Team Member" type="submit" class="invisible-button">
+                                        <i class="far fa-trash-alt fa-lg trashHover"></i>
+                                    </button>
+                                    <input type="hidden" name="projectId" th:value="${project.id}"/>
+                                </form>
+                                <button title="Edit Team Member" class="invisible-button open-editTeamMemberModal" data-toggle="modal" data-target="#editTeamMemberModal"
+                                        th:attr="data-id=${project.id},data-name=${member.name},data-role=${member.role},data-team-member-id=${member.id}">
+                                    <i class="far fa-edit fa-lg editHover"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success editSavePM" id="saveTeamMembersBtn" style="display: none"><span class="fas fa-save fa-lg"></span> Save</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="line"></div>
+
+    <div class="container-fluid" id="risksDiv" style="padding: 0;">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="float: left;">Project Risks</h4>
+                <button style="float: right;" class="btn btn-labeled btn-success open-createRiskModal" data-toggle="modal" data-target="#createRiskModal" th:attr="data-id=${project.id}">
+                    <span class="btn-label"><i class="fa fa-plus"></i></span>Add Risk
+                </button>
+                <table id="riskDatatable" class="display dataTable">
+                    <thead>
+                    <tr>
+                        <th>Risk Description</th>
+                        <th>Risk Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="risk : ${risks}">
+                        <td th:text="${risk.description}">TEST</td>
+                        <td th:text="${risk.status}">TEST</td>
+                        <td>
+                            <div class="row" style="margin-left: 5px;">
+                                <form id="deleteRiskForm" style="display:inline;" th:action="@{/delete-risk}" method="post">
+                                    <input type="hidden" name="risk" th:value="${risk.id}"/>
+                                    <button id="deleteRiskBtn" title="Delete Risk" type="submit" class="invisible-button">
+                                        <i class="far fa-trash-alt fa-lg trashHover"></i>
+                                    </button>
+                                    <input type="hidden" name="projectId" th:value="${project.id}"/>
+                                </form>
+                                <button title="Edit Risk" type="button" class="invisible-button open-editRiskModal" data-toggle="modal" data-target="#editRiskModal"
+                                        th:attr="data-id=${project.id},data-description=${risk.description},data-status=${risk.status},data-risk-id=${risk.id}">
+                                    <i class="far fa-edit fa-lg editHover"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="search-filter"></th>
+                        <th class="search-filter"></th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
