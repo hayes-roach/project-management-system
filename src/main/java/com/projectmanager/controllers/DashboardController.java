@@ -1,12 +1,15 @@
 package com.projectmanager.controllers;
 
+import com.projectmanager.data.dao.FunctionalReqRepository;
 import com.projectmanager.data.dao.ProjectRepository;
 import com.projectmanager.data.dao.RiskRepository;
 import com.projectmanager.data.dao.TeamMemberRepository;
+import com.projectmanager.data.object.FunctionalRequirement;
 import com.projectmanager.data.object.Project;
 import com.projectmanager.data.object.Risk;
 import com.projectmanager.data.object.TeamMember;
 import com.projectmanager.service.ProjectService;
+import com.projectmanager.service.RequirementService;
 import com.projectmanager.service.RiskService;
 import com.projectmanager.service.TeamMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,12 @@ public class DashboardController {
 
     @Autowired
     TeamMemberRepository teamMemberRepository;
+
+    @Autowired
+    FunctionalReqRepository functionalReqRepository;
+
+    @Autowired
+    RequirementService requirementService;
 
     @GetMapping("/")
     public String dashboard(Model model, HttpSession httpSession) {
@@ -90,6 +99,10 @@ public class DashboardController {
         List<TeamMember> teamMembers =  teamMemberService.getAllTeamMembersByProjectId(id);
 
         model.addAttribute("team", teamMembers);
+
+        List<FunctionalRequirement> functionalRequirements = requirementService.getAllFunctionalRequirementsByProjectId(id);
+
+        model.addAttribute("functionalRequirements", functionalRequirements);
 
         return "view-project";
     }
@@ -202,6 +215,74 @@ public class DashboardController {
         String role = request.getParameter("role");
 
         teamMemberService.updateTeamMember(name, role, id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/create-functional-requirement")
+    public String createFunctionalRequirement(HttpServletRequest request) {
+
+        String requirement = request.getParameter("functionalRequirement");
+        String projectId = request.getParameter("projectId");
+
+        requirementService.createFunctionalRequirement(requirement, projectId);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/delete-functional-requirement")
+    public String deleteFunctionalRequirement(HttpServletRequest request) {
+
+        String id = request.getParameter("functionalRequirementId");
+        String projectId = request.getParameter("projectId");
+
+        requirementService.deleteFunctionalRequirement(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/edit-functional-requirement")
+    public String editFunctionalRequirement(HttpServletRequest request) {
+
+        String id = request.getParameter("requirementId");
+        String projectId = request.getParameter("projectId");
+        String requirement = request.getParameter("functionalRequirement");
+
+        requirementService.updateFunctionalRequirement(requirement, id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/create-non-functional-requirement")
+    public String createNonFunctionalRequirement(HttpServletRequest request) {
+
+        String requirement = request.getParameter("requirement");
+        String projectId = request.getParameter("projectId");
+
+        requirementService.createNonFunctionalRequirement(requirement, projectId);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/delete-non-functional-requirement")
+    public String deleteNonFunctionalRequirement(HttpServletRequest request) {
+
+        String id = request.getParameter("requirementId");
+        String projectId = request.getParameter("projectId");
+
+        requirementService.deleteNonFunctionalRequirement(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("/edit-non-functional-requirement")
+    public String editNonFunctionalRequirement(HttpServletRequest request) {
+
+        String id = request.getParameter("teamMemberId");
+        String projectId = request.getParameter("projectId");
+        String requirement = request.getParameter("requirement");
+
+        requirementService.updateNonFunctionalRequirement(requirement, id);
 
         return "redirect:/view-project?id=" + projectId;
     }

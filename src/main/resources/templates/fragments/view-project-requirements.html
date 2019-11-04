@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h4 style="float: left;">Functional Requirements</h4>
-                <button style="float: right;" class="btn btn-labeled btn-success open-createFunctionReqModal" data-toggle="modal" data-target="#createFunctionReqModal" th:attr="data-id=${project.id}">
+                <button style="float: right;" class="btn btn-labeled btn-success open-createFunctionalRequirementModal" data-toggle="modal" data-target="#createFunctionalRequirementModal" th:attr="data-id=${project.id}">
                     <span class="btn-label"><i class="fa fa-plus"></i></span>Add Requirement
                 </button>
                 <table id="functionalReqTable" class="display">
@@ -24,19 +24,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>test</td>
+                    <tr th:each="functionalRequirement : ${functionalRequirements}">
+                        <td th:text="${functionalRequirement.requirement}"></td>
                         <td>
                             <div class="row" style="margin-left: 5px;">
-                                <form style="display:inline;" th:action="@{/delete-team-member}" method="post">
-                                    <input type="hidden" name="member"/>
-                                    <button title="Remove Team Member" type="submit" class="invisible-button">
+                                <form style="display:inline;" th:action="@{/delete-functional-requirement}" method="post">
+                                    <input type="hidden" name="functionalRequirementId" th:value="${functionalRequirement.id}"/>
+                                    <button title="Delete Requirement" type="submit" class="invisible-button">
                                         <i class="far fa-trash-alt fa-lg trashHover"></i>
                                     </button>
                                     <input type="hidden" name="projectId" th:value="${project.id}"/>
                                 </form>
-                                <button title="Edit Team Member" class="invisible-button open-editTeamMemberModal" data-toggle="modal" data-target="#editTeamMemberModal"
-                                        th:attr="data-id=${project.id}">
+                                <button title="Edit Requirement" class="invisible-button open-editFunctionalRequirementModal" data-toggle="modal" data-target="#editFunctionalRequirementModal"
+                                        th:attr="data-id=${project.id},data-requirement=${functionalRequirement.requirement},data-requirement-id=${functionalRequirement.id}">
                                     <i class="far fa-edit fa-lg editHover"></i>
                                 </button>
                             </div>

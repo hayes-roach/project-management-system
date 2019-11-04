@@ -28,7 +28,7 @@
     <!-- Sidebar  -->
     <div th:replace="fragments/sidebar-project :: sidebar-project"></div>
 
-    <!-- Page Content  -->
+    <!-- Main Page Content  -->
     <div id="content">
         <div class="row">
             <div class="col-md-12">
@@ -66,6 +66,8 @@
     <div th:replace="fragments/create-team-member-modal :: create-team-member-modal"></div>
     <div th:replace="fragments/edit-team-member-modal :: edit-team-member-modal"></div>
     <div th:replace="fragments/edit-risk-modal :: edit-risk-modal"></div>
+    <div th:replace="fragments/create-functional-requirement-modal :: create-functional-requirement-modal"></div>
+    <div th:replace="fragments/edit-functional-requirement-modal :: edit-functional-requirement-modal"></div>
 
 </div>
 
@@ -289,6 +291,36 @@
         $(".modal-body #edit-status").val(status).change();
         $(".modal-body #edit-description").val(description);
         $(".modal-body #riskId").val(riskId);
+
+    });
+
+    $(document).on("click", ".open-createFunctionalRequirementModal", function () {
+
+        var projectId = $(this).data("id");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+
+    });
+
+    $(document).on("click", ".open-editFunctionalRequirementModal", function () {
+
+        var projectId = $(this).data("id");
+        var requirement = $(this).data("requirement");
+        var requirementId = $(this).data("requirementId");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+        $(".modal-body #functionalRequirement").val(requirement);
+        $(".modal-body #requirementId").val(requirementId);
+
+    });
+
+    $(document).on("click", ".open-createNonFunctionalRequirementModal", function () {
+
+        var projectId = $(this).data("id");
+     //   var requirement = $(this).data("requirement");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+      //  $(".modal-body #nonFunctionalRequirement").val(requirement);
 
     });
 
