@@ -4,10 +4,7 @@ import com.projectmanager.data.dao.FunctionalReqRepository;
 import com.projectmanager.data.dao.ProjectRepository;
 import com.projectmanager.data.dao.RiskRepository;
 import com.projectmanager.data.dao.TeamMemberRepository;
-import com.projectmanager.data.object.FunctionalRequirement;
-import com.projectmanager.data.object.Project;
-import com.projectmanager.data.object.Risk;
-import com.projectmanager.data.object.TeamMember;
+import com.projectmanager.data.object.*;
 import com.projectmanager.service.ProjectService;
 import com.projectmanager.service.RequirementService;
 import com.projectmanager.service.RiskService;
@@ -103,6 +100,10 @@ public class DashboardController {
         List<FunctionalRequirement> functionalRequirements = requirementService.getAllFunctionalRequirementsByProjectId(id);
 
         model.addAttribute("functionalRequirements", functionalRequirements);
+
+        List<NonFunctionalRequirement> nonFunctionalRequirements = requirementService.getAllNonFunctionalRequirementsByProjectId(id);
+
+        model.addAttribute("nonFunctionalRequirements", nonFunctionalRequirements);
 
         return "view-project";
     }
@@ -256,7 +257,7 @@ public class DashboardController {
     @PostMapping("/create-non-functional-requirement")
     public String createNonFunctionalRequirement(HttpServletRequest request) {
 
-        String requirement = request.getParameter("requirement");
+        String requirement = request.getParameter("nonFunctionalRequirement");
         String projectId = request.getParameter("projectId");
 
         requirementService.createNonFunctionalRequirement(requirement, projectId);
