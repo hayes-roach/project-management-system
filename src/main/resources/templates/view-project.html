@@ -42,17 +42,18 @@
             </div>
         </div>
         <ul class="nav nav-pills" id="myTab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
+            <li class="nav-item active">
+                <a class="nav-link general-tab" id="general-tab" data-toggle="pill" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#project-requirements" role="tab" aria-controls="profile" aria-selected="false">Project Requirements</a>
+                <a class="nav-link" id="project-requirements-tab" data-toggle="pill" href="#project-requirements" role="tab" aria-controls="profile" aria-selected="false">Project Requirements</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#project-monitoring" role="tab" aria-controls="contact" aria-selected="false">Project Monitoring & Tracking</a>
+                <a class="nav-link" id="project-monitoring-tab" data-toggle="pill" href="#project-monitoring" role="tab" aria-controls="contact" aria-selected="false">Project Monitoring & Tracking</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
+            <div class="line"></div>
             <div th:replace="fragments/view-general :: view-general"></div>
             <div th:replace="fragments/view-project-requirements :: view-project-requirements"></div>
             <div th:replace="fragments/view-project-monitoring :: view-project-monitoring"></div>
@@ -86,6 +87,27 @@
 
 <script>
     $(function () {
+
+        $('#createProjectBtn').on('click', function() {
+            $('#general-tab').tab('show');
+        });
+
+        $('.project-side').click(function() {
+            localStorage.clear();
+        });
+
+
+
+        $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+            localStorage.setItem('lastTab', $(this).attr('href'));
+        });
+
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab) {
+            $('[href="' + lastTab + '"]').tab('show');
+        } else {
+            $('#general-tab').tab('show');
+        }
 
         // Datatable initialization
 
