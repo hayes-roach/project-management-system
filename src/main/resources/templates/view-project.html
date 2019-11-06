@@ -70,6 +70,7 @@
     <div th:replace="fragments/create-functional-requirement-modal :: create-functional-requirement-modal"></div>
     <div th:replace="fragments/edit-functional-requirement-modal :: edit-functional-requirement-modal"></div>
     <div th:replace="fragments/create-non-functional-requirement-modal :: create-non-functional-requirement-modal"></div>
+    <div th:replace="fragments/edit-non-functional-requirement-modal :: edit-non-functional-requirement-modal"></div>
 
 </div>
 
@@ -341,6 +342,18 @@
 
         var projectId = $(this).data("id");
         $(".modal-body #projectIdHidden").val(projectId);
+
+    });
+
+    $(document).on("click", ".open-editNonFunctionalRequirementModal", function () {
+
+        var projectId = $(this).data("id");
+        var requirement = $(this).data("requirement");
+        var requirementId = $(this).data("requirementId");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+        $(".modal-body #nonFunctionalRequirement").val(requirement);
+        $(".modal-body #requirementId").val(requirementId);
 
     });
 

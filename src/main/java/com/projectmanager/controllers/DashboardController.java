@@ -268,7 +268,7 @@ public class DashboardController {
     @PostMapping("/delete-non-functional-requirement")
     public String deleteNonFunctionalRequirement(HttpServletRequest request) {
 
-        String id = request.getParameter("requirementId");
+        String id = request.getParameter("nonFunctionalRequirementId");
         String projectId = request.getParameter("projectId");
 
         requirementService.deleteNonFunctionalRequirement(id);
@@ -279,9 +279,9 @@ public class DashboardController {
     @PostMapping("/edit-non-functional-requirement")
     public String editNonFunctionalRequirement(HttpServletRequest request) {
 
-        String id = request.getParameter("teamMemberId");
+        String id = request.getParameter("requirementId");
         String projectId = request.getParameter("projectId");
-        String requirement = request.getParameter("requirement");
+        String requirement = request.getParameter("nonFunctionalRequirement");
 
         requirementService.updateNonFunctionalRequirement(requirement, id);
 

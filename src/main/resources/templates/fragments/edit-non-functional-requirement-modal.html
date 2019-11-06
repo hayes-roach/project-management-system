@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+</head>
+<body>
+<div class="modal fade" id="editNonFunctionalRequirementModal" tabindex="-1" role="dialog" aria-labelledby="editNonFunctionalRequirementModalTitle" th:fragment="edit-non-functional-requirement-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editNonFunctionalRequirementModalTitle">Add Functional Requirement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-non-functional-requirement-form" th:action="@{/edit-non-functional-requirement}" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="nonFunctionalRequirement">Requirement:</label>
+                        <textarea id="nonFunctionalRequirement" class="form-control" type="text" name="nonFunctionalRequirement" required></textarea>
+                    </div>
+
+                    <input type="hidden" id="projectIdHidden" name="projectId">
+                    <input type="hidden" id="requirementId" name="requirementId">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
