@@ -295,6 +295,9 @@ h4, .colored {
     color: #404382;
 }
 
+.canvasjs-chart-credit, .canvasjs-chart-toolbar {
+    display: none;
+}
 
 
 
