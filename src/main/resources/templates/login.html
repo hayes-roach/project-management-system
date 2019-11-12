@@ -50,7 +50,7 @@
             height: 100px;
             border-radius: 50%;
             z-index: 9;
-            background: #4aba70;
+            background: #6f80c6;
             padding: 15px;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
         }
@@ -71,12 +71,12 @@
             right: 15px;
         }
         .login-form .btn {
-            background: #4aba70;
+            background: #7687cf;
             border: none;
             line-height: normal;
         }
         .login-form .btn:hover, .login-form .btn:focus {
-            background: #42ae68;
+            background: #556296;
         }
         .login-form .checkbox-inline {
             float: left;
@@ -91,7 +91,7 @@
             font-size: 13px;
         }
         .login-form a {
-            color: #4aba70;
+            color: #7687cf;
         }
     </style>
 </head>
@@ -100,11 +100,12 @@
     <form name="f" th:action="@{/login}" method="POST">
         <div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
         <h4 class="modal-title">Login to Your Account</h4>
+        <!--<div th:if="${param.error}">Invalid username or password</div>-->
         <div class="form-group">
-            <input id="username" type="text" class="form-control" placeholder="username" required="required">
+            <input id="username" type="text" name="username" class="form-control" placeholder="username" required="required">
         </div>
         <div class="form-group">
-            <input id="password" type="password" class="form-control" placeholder="password" required="required">
+            <input id="password" type="password" name="password" class="form-control" placeholder="password" required="required">
         </div>
         <div class="form-group small clearfix">
             <label class="checkbox-inline"><input type="checkbox"> Remember me</label>

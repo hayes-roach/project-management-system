@@ -56,15 +56,20 @@
                                 <p class="dashboardBtn">Edit User</p>
                             </div>
                         </button>
-                        <button class="bigbox" style="margin-left: 25px;">
-                            <div>
-                                <i class="fas fa-sign-out-alt fa-5x dashboardBtn"></i>
-                                <p class="dashboardBtn">Logout</p>
-                            </div>
+
+                        <button class="bigbox" type="submit" form="logout" style="margin-left: 25px;">
+                                <div>
+                                    <i class="fas fa-sign-out-alt fa-5x dashboardBtn"></i>
+                                    <p class="dashboardBtn">Logout</p>
+                                </div>
                         </button>
                     </div>
                 </div>
             </div>
+
+            <form type="hidden" id="logout" th:action="@{/logout}" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            </form>
 
         </div>
 
