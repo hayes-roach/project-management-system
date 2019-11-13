@@ -21,35 +21,38 @@
 
                     <div class="form-group">
                         <label for="requirementsAnalysis" class="col-form-label">Requirement Analysis Hours</label>
-                        <input id="requirementsAnalysis" name="requirementsAnalysis" value="0" type="number" class="form-control" placeholder="0">
+                        <input id="requirementsAnalysis" name="requirementsAnalysis" type="number" class="form-control" placeholder="0" required>
                     </div>
 
                     <div class="form-group">
                         <label for="designing" class="col-form-label">Designing Hours</label>
-                        <input id="designing" name="designing" type="number" value="0" class="form-control" placeholder="0">
+                        <input id="designing" name="designing" type="number" class="form-control" placeholder="0" required>
                     </div>
 
                     <div class="form-group">
                         <label for="coding" class="col-form-label">Coding Hours</label>
-                        <input id="coding" name="coding" type="number" value="0" class="form-control" placeholder="0">
+                        <input id="coding" name="coding" type="number" class="form-control" placeholder="0" required>
                     </div>
 
                     <div class="form-group">
                         <label for="testing" class="col-form-label">Testing Hours</label>
-                        <input id="testing" name="testing" type="number" value="0" class="form-control" placeholder="0">
+                        <input id="testing" name="testing" type="number" class="form-control" placeholder="0" required>
                     </div>
 
                     <div class="form-group">
                         <label for="projectManagement" class="col-form-label">Project Management Hours</label>
-                        <input id="projectManagement" name="projectManagement" value="0" type="number" class="form-control" placeholder="0">
+                        <input id="projectManagement" name="projectManagement" type="number" class="form-control" placeholder="0" required>
                     </div>
 
                     <input type="hidden" name="projectId" th:value="${project.id}">
                 </form>
 
-                <button style="float: right;" class="btn btn-labeled btn-success" type="submit" form="effortForm">
-                    <span class="btn-label"><i class="fa fa-plus"></i></span>Add Hours
-                </button>
+                <div style="text-align: right;">
+                    <button class="btn btn-labeled btn-success" type="submit" form="effortForm">
+                        <span class="btn-label"><i class="fa fa-plus"></i></span>Add Hours
+                    </button>
+                </div>
+
             </div>
 
             <div class="col-md-3">
@@ -82,7 +85,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div id="chartContainer" style="width:100%; height: 400px"></div>
+                    <div id="chartContainer" style="width:100%; height: 400px" th:if="${totalHours} != 0"></div>
                     <script th:inline="javascript">
 
                         /*<![CDATA[*/
@@ -133,8 +136,48 @@
             </div>
         </div>
 
-        <div class="row">
-            <h4>Recent</h4>
+        <div class="row" style="margin-top: 25px;">
+            <div class="col-md-12">
+                <h4 style="float: left;">Tracked Effort Entries</h4>
+                <table id="trackedEffortTable" class="display">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Req. Analysis</th>
+                        <th>Designing</th>
+                        <th>Coding</th>
+                        <th>Testing</th>
+                        <th>Project Mgt.</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="effort : ${effortList}">
+                        <td th:text="${effort.date}"></td>
+                        <td th:text="${effort.requirementAnalysisHours} + ' hours'"></td>
+                        <td th:text="${effort.designingHours} + ' hours'"></td>
+                        <td th:text="${effort.codingHours} + ' hours'"></td>
+                        <td th:text="${effort.testingHours} + ' hours'"></td>
+                        <td th:text="${effort.projectManagementHours} + ' hours'"></td>
+                        <td>
+                            <div class="row" style="margin-left: 5px;">
+                                <form style="display:inline;" th:action="@{/delete-effort}" method="post">
+                                    <input type="hidden" name="effortId" th:value="${effort.id}"/>
+                                    <button title="Delete Entry" type="submit" class="invisible-button">
+                                        <i class="far fa-trash-alt fa-lg trashHover"></i>
+                                    </button>
+                                    <input type="hidden" name="projectId" th:value="${project.id}"/>
+                                </form>
+                                <button title="Edit Requirement" class="invisible-button open-editNonFunctionalRequirementModal" data-toggle="modal" data-target="#editNonFunctionalRequirementModal"
+                                        th:attr="data-id=${effort.id}">
+                                    <i class="far fa-edit fa-lg editHover"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

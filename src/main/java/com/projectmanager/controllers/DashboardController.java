@@ -134,6 +134,8 @@ public class DashboardController {
 
         int totalHours = codingHours + testingHours + designingHours + projectManagementHours + requirementAnalysisHours;
 
+        model.addAttribute("totalHours", totalHours);
+
         Double codingDistribution = (double) codingHours / totalHours;
         Double testingDistribution = (double) testingHours / totalHours;
         Double designingDistribution = (double) designingHours / totalHours;
@@ -171,6 +173,10 @@ public class DashboardController {
 
 
         model.addAttribute("dataPoints", list);
+
+        Collections.reverse(effortList);
+
+        model.addAttribute("effortList", effortList);
 
         return "view-project";
     }
@@ -360,7 +366,7 @@ public class DashboardController {
 
         String projectId = request.getParameter("projectId");
         String stringDate = request.getParameter("date");
-        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
+        Date date = new SimpleDateFormat("MM/dd/yyyy").parse(stringDate);
         int requirementsAnalysis = Integer.parseInt(request.getParameter("requirementsAnalysis"));
         int designing = Integer.parseInt(request.getParameter("designing"));
         int coding = Integer.parseInt(request.getParameter("coding"));
@@ -389,6 +395,18 @@ public class DashboardController {
 
         return "redirect:/view-project?id=" + projectId;
     }
+
+    @PostMapping("/delete-effort")
+    public String deleteEffort(HttpServletRequest request) {
+
+        String id = request.getParameter("effortId");
+        String projectId = request.getParameter("projectId");
+
+        effortService.deleteEffortById(id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
 
 
 
