@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+</head>
+<body>
+<div class="modal fade" id="editEffortModal" tabindex="-1" role="dialog" aria-labelledby="editEffortModalTitle" th:fragment="edit-effort-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEffortModalTitle">Edit Effort Entry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit-functional-requirement-form" th:action="@{/update-effort}" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="editRequirementsAnalysis" class="col-form-label">Requirement Analysis Hours</label>
+                        <input id="editRequirementsAnalysis" name="requirementsAnalysis" type="number" class="form-control" placeholder="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDesigning" class="col-form-label">Designing Hours</label>
+                        <input id="editDesigning" name="designing" type="number" class="form-control" placeholder="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editCoding" class="col-form-label">Coding Hours</label>
+                        <input id="editCoding" name="coding" type="number" class="form-control" placeholder="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editTesting" class="col-form-label">Testing Hours</label>
+                        <input id="editTesting" name="testing" type="number" class="form-control" placeholder="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editProjectManagement" class="col-form-label">Project Management Hours</label>
+                        <input id="editProjectManagement" name="projectManagement" type="number" class="form-control" placeholder="0" required>
+                    </div>
+
+                    <input type="hidden" id="projectIdHidden" name="projectId">
+                    <input type="hidden" id="effortId" name="effortId">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

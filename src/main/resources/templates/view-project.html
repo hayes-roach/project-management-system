@@ -73,6 +73,7 @@
     <div th:replace="fragments/edit-functional-requirement-modal :: edit-functional-requirement-modal"></div>
     <div th:replace="fragments/create-non-functional-requirement-modal :: create-non-functional-requirement-modal"></div>
     <div th:replace="fragments/edit-non-functional-requirement-modal :: edit-non-functional-requirement-modal"></div>
+    <div th:replace="fragments/edit-effort-modal :: edit-effort-modal"></div>
 
 </div>
 
@@ -93,10 +94,12 @@
 <script>
     $(function () {
 
-        $('[data-toggle="datepicker"]').datepicker( {
+        $('.initDate[data-toggle="datepicker"]').datepicker( {
             setDate: new Date(),
             autoPick: true
         });
+
+        $('.editDate[data-toggle="datepicker"]').datepicker();
 
         $('#createProjectBtn').on('click', function() {
             $('#general-tab').tab('show');
@@ -380,6 +383,27 @@
         $(".modal-body #projectIdHidden").val(projectId);
         $(".modal-body #nonFunctionalRequirement").val(requirement);
         $(".modal-body #requirementId").val(requirementId);
+
+    });
+
+    $(document).on("click", ".open-editEffortModal", function () {
+
+        var projectId = $(this).data("id");
+        var effortId = $(this).data("effortId");
+        var reqAnalysisHours = $(this).data("reqAnalysis");
+        var designingHours = $(this).data("designing");
+        var codingHours = $(this).data("coding");
+        var testingHours = $(this).data("testing");
+        var projectMgtHours = $(this).data("projectMgt");
+
+        $(".modal-body #projectIdHidden").val(projectId);
+        $(".modal-body #effortId").val(effortId);
+        $(".modal-body #editRequirementsAnalysis").val(reqAnalysisHours);
+        $(".modal-body #editDesigning").val(designingHours);
+        $(".modal-body #editCoding").val(codingHours);
+        $(".modal-body #editTesting").val(testingHours);
+        $(".modal-body #editProjectManagement").val(projectMgtHours);
+
 
     });
 
