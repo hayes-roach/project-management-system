@@ -8,16 +8,17 @@
 
     <title>Project Management System</title>
 
-    <!-- Our Custom CSS -->
+
     <link rel="stylesheet" type="text/css" th:href="@{/css/core.css}">
-    <!-- Bootstrap CSS CDN -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Scrollbar Custom CSS -->
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css">
 
     <script src="https://kit.fontawesome.com/797e60a2e0.js" crossorigin="anonymous"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -82,6 +83,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
 
 
 <script th:src="@{/js/datatables.js}"></script>
@@ -90,6 +92,11 @@
 
 <script>
     $(function () {
+
+        $('[data-toggle="datepicker"]').datepicker( {
+            setDate: new Date(),
+            autoPick: true
+        });
 
         $('#createProjectBtn').on('click', function() {
             $('#general-tab').tab('show');

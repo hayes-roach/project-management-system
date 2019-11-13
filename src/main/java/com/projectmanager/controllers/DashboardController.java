@@ -1,15 +1,9 @@
 package com.projectmanager.controllers;
 
 import com.google.gson.Gson;
-import com.projectmanager.data.dao.FunctionalReqRepository;
-import com.projectmanager.data.dao.ProjectRepository;
-import com.projectmanager.data.dao.RiskRepository;
-import com.projectmanager.data.dao.TeamMemberRepository;
+import com.projectmanager.data.dao.*;
 import com.projectmanager.data.object.*;
-import com.projectmanager.service.ProjectService;
-import com.projectmanager.service.RequirementService;
-import com.projectmanager.service.RiskService;
-import com.projectmanager.service.TeamMemberService;
+import com.projectmanager.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class DashboardController {
@@ -48,6 +41,12 @@ public class DashboardController {
 
     @Autowired
     RequirementService requirementService;
+
+    @Autowired
+    EffortService effortService;
+
+    @Autowired
+    EffortRepository effortRepository;
 
     @GetMapping("/")
     public String dashboard(Model model, HttpSession httpSession) {
@@ -132,7 +131,30 @@ public class DashboardController {
         String dataPoints = gsonObj.toJson(list);
 
         session.setAttribute("dataPoints", dataPoints);
-        System.out.println(dataPoints);
+
+        List<Effort> effortList = effortRepository.findAllByProjectId(id);
+
+        int requirementAnalysisHours = 0;
+        int codingHours = 0;
+        int testingHours = 0;
+        int designingHours = 0;
+        int projectManagementHours = 0;
+
+        for(Effort effort : effortList) {
+            codingHours = codingHours + effort.getCodingHours();
+            testingHours = testingHours + effort.getTestingHours();
+            designingHours = designingHours + effort.getDesigningHours();
+            projectManagementHours = projectManagementHours + effort.getProjectManagementHours();
+            requirementAnalysisHours = requirementAnalysisHours + effort.getRequirementAnalysisHours();
+        }
+
+        model.addAttribute("codingTotal", codingHours);
+        model.addAttribute("testingTotal", testingHours);
+        model.addAttribute("designingTotal", designingHours);
+        model.addAttribute("projectMgtTotal", projectManagementHours);
+        model.addAttribute("requirementAnalysisTotal", requirementAnalysisHours);
+
+        model.addAttribute("effortList", effortList);
 
         return "view-project";
     }
@@ -313,6 +335,41 @@ public class DashboardController {
         String requirement = request.getParameter("nonFunctionalRequirement");
 
         requirementService.updateNonFunctionalRequirement(requirement, id);
+
+        return "redirect:/view-project?id=" + projectId;
+    }
+
+    @PostMapping("update-effort")
+    public String updateEffort(HttpServletRequest request) throws ParseException {
+
+        String projectId = request.getParameter("projectId");
+        String stringDate = request.getParameter("date");
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
+        int requirementsAnalysis = Integer.parseInt(request.getParameter("requirementsAnalysis"));
+        int designing = Integer.parseInt(request.getParameter("designing"));
+        int coding = Integer.parseInt(request.getParameter("coding"));
+        int testing = Integer.parseInt(request.getParameter("testing"));
+        int projectManagement = Integer.parseInt(request.getParameter("projectManagement"));
+
+       // String effortId = request.getParameter("id");
+
+        Effort effort;
+
+       // if(effortId == null) {
+            effort = new Effort();
+       // } else {
+       //     effort = effortService.getEffortById(effortId);
+       // }
+
+        effort.setProjectId(projectId);
+        effort.setDate(date);
+        effort.setRequirementAnalysisHours(requirementsAnalysis);
+        effort.setDesigningHours(designing);
+        effort.setCodingHours(coding);
+        effort.setTestingHours(testing);
+        effort.setProjectManagementHours(projectManagement);
+
+        effortService.updateEffort(effort);
 
         return "redirect:/view-project?id=" + projectId;
     }

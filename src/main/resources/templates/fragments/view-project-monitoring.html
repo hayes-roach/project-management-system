@@ -12,7 +12,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <form>
+                <form id="effortForm" th:action="@{/update-effort}" method="post">
+
+                    <div class="form-group">
+                        <label for="datePicker">Date:</label>
+                        <input id="datePicker" name="date" class="form-control"  data-toggle="datepicker">
+                    </div>
+
                     <div class="form-group">
                         <label for="requirementsAnalysis" class="col-form-label">Requirement Analysis Hours</label>
                         <input id="requirementsAnalysis" name="requirementsAnalysis" type="number" class="form-control" placeholder="0">
@@ -37,36 +43,40 @@
                         <label for="projectManagement" class="col-form-label">Project Management Hours</label>
                         <input id="projectManagement" name="projectManagement" type="number" class="form-control" placeholder="0">
                     </div>
+
+                    <input type="hidden" name="projectId" th:value="${project.id}">
                 </form>
-                <button style="float: right;" class="btn btn-labeled btn-success" th:attr="data-id=${project.id}">
-                    <span class="btn-label"><i class="fa fa-plus"></i></span>Add Hours
+
+                <button style="float: right;" class="btn btn-labeled btn-success" type="submit" form="effortForm">
+                    <span class="btn-label"><i class="fa fa-plus"></i></span>Update Hours
                 </button>
             </div>
 
             <div class="col-md-3">
+
                 <div class="form-group">
                     <label for="requirementsAnalysisTotal" class="col-form-label">Total Requirement Analysis Hours</label>
-                    <input id="requirementsAnalysisTotal" name="requirementsAnalysisTotal" type="number" class="form-control" readonly>
+                    <input id="requirementsAnalysisTotal" name="requirementsAnalysisTotal" th:value="${requirementAnalysisTotal}" type="number" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="designingTotal" class="col-form-label">Total Designing Hours</label>
-                    <input id="designingTotal" name="designingTotal" type="number" class="form-control" readonly>
+                    <input id="designingTotal" name="designingTotal" type="number" th:value="${designingTotal}" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="codingTotal" class="col-form-label">Total Coding Hours</label>
-                    <input id="codingTotal" name="codingTotal" type="number" class="form-control" readonly>
+                    <input id="codingTotal" name="codingTotal" type="number" th:value="${codingTotal}" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="testingTotal" class="col-form-label">Total Testing Hours</label>
-                    <input id="testingTotal" name="testingTotal" type="number" class="form-control" readonly>
+                    <input id="testingTotal" name="testingTotal" type="number" th:value="${testingTotal}" class="form-control" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="projectManagementTotal" class="col-form-label">Total Project Management Hours</label>
-                    <input id="projectManagementTotal" name="projectManagementTotal" type="number" class="form-control" readonly>
+                    <input id="projectManagementTotal" name="projectManagementTotal" th:value="${projectMgtTotal}" type="number" class="form-control" readonly>
                 </div>
             </div>
 
