@@ -21,34 +21,34 @@
 
                     <div class="form-group">
                         <label for="requirementsAnalysis" class="col-form-label">Requirement Analysis Hours</label>
-                        <input id="requirementsAnalysis" name="requirementsAnalysis" type="number" class="form-control" placeholder="0">
+                        <input id="requirementsAnalysis" name="requirementsAnalysis" value="0" type="number" class="form-control" placeholder="0">
                     </div>
 
                     <div class="form-group">
                         <label for="designing" class="col-form-label">Designing Hours</label>
-                        <input id="designing" name="designing" type="number" class="form-control" placeholder="0">
+                        <input id="designing" name="designing" type="number" value="0" class="form-control" placeholder="0">
                     </div>
 
                     <div class="form-group">
                         <label for="coding" class="col-form-label">Coding Hours</label>
-                        <input id="coding" name="coding" type="number" class="form-control" placeholder="0">
+                        <input id="coding" name="coding" type="number" value="0" class="form-control" placeholder="0">
                     </div>
 
                     <div class="form-group">
                         <label for="testing" class="col-form-label">Testing Hours</label>
-                        <input id="testing" name="testing" type="number" class="form-control" placeholder="0">
+                        <input id="testing" name="testing" type="number" value="0" class="form-control" placeholder="0">
                     </div>
 
                     <div class="form-group">
                         <label for="projectManagement" class="col-form-label">Project Management Hours</label>
-                        <input id="projectManagement" name="projectManagement" type="number" class="form-control" placeholder="0">
+                        <input id="projectManagement" name="projectManagement" value="0" type="number" class="form-control" placeholder="0">
                     </div>
 
                     <input type="hidden" name="projectId" th:value="${project.id}">
                 </form>
 
                 <button style="float: right;" class="btn btn-labeled btn-success" type="submit" form="effortForm">
-                    <span class="btn-label"><i class="fa fa-plus"></i></span>Update Hours
+                    <span class="btn-label"><i class="fa fa-plus"></i></span>Add Hours
                 </button>
             </div>
 
@@ -85,48 +85,49 @@
                     <div id="chartContainer" style="width:100%; height: 400px"></div>
                     <script th:inline="javascript">
 
-                        var dps = [];
-                        var chart = new CanvasJS.Chart("chartContainer", {
-                            exportEnabled: true,
-                            animationEnabled: true,
-                            theme: "light2", // "light1", "dark1", "dark2"
-                            title: {
-                                text: "Project Effort Distribution"
-                            },
-                            subtitles: [{
-                                text: "Total Effort in Person Hours"
-                            }],
-                            data: [{
-                                type: "pie",
-                                yValueFormatString: "#,##0\"%\"",
-                                indexLabel: "{label} - {y}",
-                                dataPoints: [
-                                    { label: "Requirement Analysis", y: 20 },
-                                    { label: "Designing", y: 20 },
-                                    { label: "Coding", y: 20 },
-                                    { label: "Testing", y: 20 },
-                                    { label: "Project Management", y: 20 }
-                                ]
-                            }]
-                        });
-                        chart.render();
-
-
-                        /*
-                         To get data from Service and to update chart, perform a AJAX request to get data, update the chart with received data and re-render the chart
-                         Please refer the following links for more info on accessing data / rest-service
-                         https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html
-                         https://spring.io/guides/gs/rest-service/
-                         */
                         /*<![CDATA[*/
-                        /*$.get( "/dataPoints", function( data ) {*/
-                        /* Update dataPoints from AJAX and render the chart*/
-                        /*[+
-                            //chart.options.data[0].dataPoints = JSON.parse([[${session.dataPoints}]]);
-                            //chart.render();
-                         +]*/
-                        /*});*/
+                        window.onload = function (e) {
+
+                            var dps = [];
+                            var chart = new CanvasJS.Chart("chartContainer", {
+                                animationEnabled: true,
+                                theme: "light2", // "light1", "dark1", "dark2"
+                                title: {
+                                    text: "Project Effort Distribution"
+                                },
+                                subtitles: [{
+                                    text: "Total Effort in Person Hours"
+                                }],
+                                data: [{
+                                    type: "pie",
+                                    yValueFormatString: "#,##0\"%\"",
+                                    indexLabel: "{label} - {y}",
+                                    dataPoints: dps
+                                }]
+                            });
+
+                            var dataPointsList = /*[[${dataPoints}]]*/ 'default';
+
+                            console.log(dataPointsList);
+
+                            count = 0;
+                            for (var i = 0; i < dataPointsList.length; i++) {
+                                var dataPoints = dataPointsList[i];
+                                console.log(dataPoints);
+
+
+                                dps[count++] = {
+                                    y: dataPoints.y,
+                                    label: dataPoints.label
+                                };
+
+                            }
+
+                            chart.render();
+                        }
+
                         /*]]>*/
+
                     </script>
                 </div>
             </div>
