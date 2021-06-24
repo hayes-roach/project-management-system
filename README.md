@@ -1,5 +1,7 @@
 # Project-Management-System
 
+KSU Project
+
 This project management system keeps track of multiple projects with an easy to use interface.
 
 Each Project has three main sections that contains different functionality.
